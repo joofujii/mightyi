@@ -1,0 +1,253 @@
+2016-06-04
+tomcat_start
+
+startup.bat
+消える。
+
+localhost:8080に画面出ない。
+
+ｃｍｄで
+startup.sh
+
+それからフォルダで
+startup.bat
+消える、もう一回
+ボックスが出る。
+別のtomcat用ボックス。
+
+localhost:8080に画面出る。
+
+------------------------------
+
+set CLASSPATH=C:\servletbook\apache-tomcat\lib\servlet-api.jar
+cd c:\servletbook\apache-tomcat\webapps\entry\WEB-INF
+javac src/HelloServlet.java -d classes
+
+*******************************
+2016/7/30
+eclipse-tomcat修復アイデア
+
+
++++++++++++++++++++++++++++++++
+バッチファイルでtomcatを起動する。
+
+
+tomcat
+OK
+http://localhost:8080/entry/HelloServlet
+OK
+http://localhost:8080/basic/hello.jsp
+OK
+http://localhost:8080/basic/HelloServlet
+NG
+メッセージ サーブレット HelloServlet が利用できません
+説明 The requested resource (サーブレット HelloServlet が利用できません) is not available.
+
+shutdown.batで一旦止めて、eclipseで起動する。
+
+Console Error =
+デーモン・スレッド [http-8080-1] (中断中 (型 java.io.ObjectInputStream を解決できません。 
+必要な .class ファイルから間接的に参照されています))	
+	HelloServlet.<init>() 行: 1	
+	NativeConstructorAccessorImpl.newInstance0(Constructor<?>, Object[]) 行: 使用不可 [ネイティブ・メソッド]	
+	NativeConstructorAccessorImpl.newInstance(Object[]) 行: 使用不可	
+	DelegatingConstructorAccessorImpl.newInstance(Object[]) 行: 使用不可	
+	Constructor<T>.newInstance(Object...) 行: 使用不可	
+	Class<T>.newInstance() 行: 使用不可	
+	StandardWrapper.loadServlet() 行: 1116	
+	StandardWrapper.allocate() 行: 809	
+	StandardWrapperValve.invoke(Request, Response) 行: 129	
+	StandardContextValve.invoke(Request, Response) 行: 191	
+	StandardHostValve.invoke(Request, Response) 行: 127	
+	ErrorReportValve.invoke(Request, Response) 行: 102	
+	StandardEngineValve.invoke(Request, Response) 行: 109	
+	CoyoteAdapter.service(Request, Response) 行: 298	
+	Http11Processor.process(Socket) 行: 852	
+	Http11Protocol$Http11ConnectionHandler.process(Socket) 行: 588	
+	JIoEndpoint$Worker.run() 行: 489	
+	Thread.run() 行: 使用不可	
+
+
+Googleより
+
+eclipseでjspコンパイル時に「The type java.io.ObjectInputStream cannot be resolved.」というエラーで
+落ちる事象が発生しました。
+でプログラムの何がいけないんだろうということで調べてみたのですが問題なく、
+どうやらjdkで使ってるバージョンに起因するものらしいので共有します。
+なお、Tomcat以外にもGAEで使ってるjettyでも発生するようです。
+
+発生条件
+　jdk1.8.0_91もしくはjdk1.8.0_92を使用している。
+対処方法(2016年6月時点)
+　jdk1.8.0_77までダウングレードする。
+
+
+
+eclipse上の階層は乱れている。
+生成時点でおかしかった。
+もう一度作る？
+
+
++++++++++++++++++++++++++++++++
+tomcatバージョンを下げる。
+
+
+jarがlibにあるか？
+
+その他配置は22ページに合っているか？
+
+
+
+entryのservletやJSPをeclipseで使えないか？
+
+自動生成はそんなに必要？
+
+コンパイルに不都合がある？
+
+
+************************
+
+
+やった事を整理してみる。
+
+１．
+eclipse無しで実施
+
+1-1
+ HelloServlet.java
+バッチファイルの作成？
+
+オートリロードの設定
+
+1-2 JSPの制作
+expression.jsp  やった？
+112ページでeclipseへ飛ぶ
+
+
+
+
+************************
+
+
+
+
+ppdry.php
+ driver program for new number
+
+
+ppdrn.php
+ driver program for No new number
+
+pp.php
+main program
+
+
+
+
+
+*******************************
+
+*******************************
+【READEME】より
+eclipse-tomcat修復アイデア
+バッチファイルでtomcatを起動する。
+tomcatバージョンを下げる。
+jarがlibにあるか？
+その他配置は22ページに合っているか？
+
+entryのservletやJSPをeclipseで使えないか？
+自動生成はそんなに必要？
+コンパイルに不都合がある？
+************************
+やった事を整理してみる。
+１．eclipse無しで実施
+1-1 HelloServlet.java
+バッチファイルの作成？
+オートリロードの設定
+1-2 JSPの制作
+expression.jsp  やった？
+112ページでeclipseへ飛ぶ
+
+
+************************
+eclipseでentryを開いた。
+
+http://localhost:8080/entry/HelloServlet
+が動かなくなった。
+
+p87のJSPを作った。
+動かなかった。
+このプロジェクトの何かが変えられている。
+
+もう一度最初のJSPから作り直し？
+
+
+
+
+ppdry.php
+ driver program for new number
+
+
+ppdrn.php
+ driver program for No new number
+
+pp.php
+main program
+
+
+
+*******************************
+現状の動作
+
+Tomcatをバッチファイルで起動する。
+
+サーブレットは動かない。
+JSPは動く。
+eclipseにかかわらず。
+
+でも（たしか）サーブレットはeclipse移行前には動いていた？
+
+
+
+
+
+*******************************
+8/4
+
+eclipsenotomcatバージョン６から４，５に変えたが変わらず。
+
+downloadにあったJDK
+jdk-8u91-windows-i586.exe
+（java8？）
+******************************
+「アプリケーションのアンインストール」
+でDBを除く全Javaを無くす。
+
+java6？の
+jdk-6u45-windows-i586
+をダウンロードしてインストール。
+一度PC落としてから、
+path設定等無しで、だめもとでそのままeclipseを起動する。
+
+
+結果：
+も動いた。
+*******************************
+なぜ？
+やはりJDKのミスマッチだった？
+basicはeclipseで作ったサンプルなので、合うのかも。
+
+eclipse起動時はjavaが別？
+
+
+
+
+
+
+
+*******************************
+
+*******************************
+
+
+
